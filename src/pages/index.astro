@@ -1,6 +1,6 @@
 ---
-import Calculator from '../components/Calculator.svelte';
-import '../styles/tailwind.css';
+import Calculator from "../components/Calculator.svelte";
+import "../styles/tailwind.css";
 ---
 
 <html lang="es">
@@ -13,7 +13,12 @@ import '../styles/tailwind.css';
 			name="description"
 			content="Calculadora de comisiones para retiros de Todoticket Integral. Calcula el retiro óptimo para minimizar el saldo restante."
 		/>
-		<title>Retiro Óptimo Todoticket Integral</title>
+		<meta name="theme-color" content="#ffffff" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="Todoticket" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+		<title>Calculadora Todoticket Integral</title>
 	</head>
 	<body>
 		<Calculator client:load />

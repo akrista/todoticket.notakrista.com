@@ -95,8 +95,31 @@
 
 	function handleInputChange(event: Event) {
 		const target = event.target as HTMLInputElement;
-		const value = parseFloat(target.value);
-		total = isNaN(value) ? null : value;
+		let inputValue = target.value.trim();
+
+		inputValue = inputValue.replace(/[^\d.,]/g, "");
+
+		let normalizedValue = inputValue;
+
+		const hasMultipleDots = (normalizedValue.match(/\./g) || []).length > 1;
+		const hasMultipleCommas =
+			(normalizedValue.match(/,/g) || []).length > 1;
+
+		if (hasMultipleDots && normalizedValue.includes(",")) {
+			normalizedValue = normalizedValue
+				.replace(/\./g, "")
+				.replace(",", ".");
+		} else if (hasMultipleCommas && normalizedValue.includes(".")) {
+			normalizedValue = normalizedValue.replace(/,/g, "");
+		} else if (
+			normalizedValue.includes(",") &&
+			!normalizedValue.includes(".")
+		) {
+			normalizedValue = normalizedValue.replace(",", ".");
+		}
+
+		const value = parseFloat(normalizedValue);
+		total = isNaN(value) || value < 0 ? null : value;
 		calculate();
 	}
 </script>
@@ -134,10 +157,9 @@
 					</span>
 					<input
 						id="total"
-						type="number"
-						step="0.01"
-						min="0"
-						placeholder="0.00"
+						type="text"
+						inputmode="decimal"
+						placeholder="0,00"
 						oninput={handleInputChange}
 						class="w-full pl-12 pr-4 py-3 text-lg border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-todo-orange dark:bg-gray-700 dark:text-white transition-colors"
 					/>
